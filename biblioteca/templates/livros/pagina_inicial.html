@@ -2,27 +2,35 @@
 {% load filter %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% include 'includes/links.html' %}
-    <link rel="stylesheet" href="{% static 'sidebar.css' %}">
-    <script defer src="{% static 'livros/pagina_inicial.js' %}"></script>
-    <title>Página Inicial</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% include 'includes/links.html' %}
+  <link rel="stylesheet" href="{% static 'sidebar.css' %}">
+  <script defer src="{% static 'livros/pagina_inicial.js' %}"></script>
+  <title>Página Inicial</title>
 </head>
+
 <body>
   {% include 'includes/navbar.html' %}
   <main class="d-flex flex-nowrap">
     {% with tela="livros" %}
-      {% include 'includes/sidebar.html' %}
+    {% include 'includes/sidebar.html' %}
     {% endwith %}
     <div class="section-content w-100">
       <div class="section-content-header py-1 px-3 d-flex justify-content-between align-items-center border-bottom">
         <h1>Livros:</h1>
         <div class="btn-group p-4">
-          <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Ações</button>
+          <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown"
+            aria-expanded="false">Ações</button>
           <ul class="dropdown-menu">
-            <li><button id="buttonAdicionarLivro" type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modalAdicionarLivro">Adicionar Livro</button></li>
+            <li><button id="buttonAdicionarLivro" type="button" class="dropdown-item" data-bs-toggle="modal"
+                data-bs-target="#modalAdicionarLivro">Adicionar Livro</button></li>
+            <li><button id="buttonAdicionarAutor" type="button" class="dropdown-item" data-bs-toggle="modal"
+                data-bs-target="#modalAdicionarAutor">Adicionar Autor</button></li>
+            <li><button id="buttonAdicionarGenero" type="button" class="dropdown-item" data-bs-toggle="modal"
+                data-bs-target="#modalAdicionarGenero">Adicionar Gênero</button></li>
           </ul>
         </div>
       </div>
@@ -30,55 +38,101 @@
   </main>
   <div class="modal fade" id="modalAdicionarLivro" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Adicionar Livro</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form action="" method="post">
-            <div class="mb-3">
-              <label for="formControlNomeLivro" class="form-label">Nome do Livro:</label>
-              <input type="text" class="form-control" name="nome" id="formControlNomeLivro" placeholder="A volta dos que não foram...">
-            </div>
-            <div class="mb-3">
-              <div class="input-group">
-                <input type="text" class="form-control" id="formControlAutorLivro" placeholder="Roberto Carlos" readonly disabled aria-label="Recipient's username" aria-describedby="button-addon2">
-                <button class="btn btn-outline-secondary" type="button" id="btnPesquisarAutor" data-bs-target="#modalPesquisarAutor" data-bs-toggle="modal">Pesquisar Autor</button>
+      <form action="" method="post"> {% csrf_token %}
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Adicionar Livro</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <div class="mb-3">
+                <label for="formControlNomeLivro" class="form-label">Nome do Livro:</label>
+                <input type="text" class="form-control" name="nome" id="formControlNomeLivro"
+                  placeholder="A volta dos que não foram...">
               </div>
-            </div>
-            <div class="mb-3">
-              <label for="formControlQuantidadeEmEstoqueLivro" class="form-label">Quantidade em Estoque:</label>
-              <input type="number" class="form-control" name="quantidade_estoque" id="formControlQuantidadeEmEstoqueLivro" placeholder="10...">
-            </div>
-            <div class="mb-3">
-              <label for="formControlPaginasLivro" class="form-label">Páginas:</label>
-              <input type="number" class="form-control" name="paginas" id="formControlPaginasLivro" placeholder="500...">
-            </div>
-          </form>
+              <div class="mb-3">
+                <label for="formControlAutorLivro">Autor do Livro:</label>
+                <select name="autor" id="formControlAutorLivro">
+                  <option value="">Selecione um autor</option>
+                  <option value="1">One</option>
+                  <option value="2">Two</option>
+                  <option value="1">Three</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="formControlGeneroLivro">Gênero do Livro:</label>
+                <select name="genero" id="formControlGeneroLivro">
+                  <option value="">Selecione um gênero</option>
+                  <option value="1">Ação</option>
+                  <option value="2">Mistério</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="formControlQuantidadeEmEstoqueLivro" class="form-label">Quantidade em Estoque:</label>
+                <input type="number" class="form-control" name="quantidade_estoque"
+                  id="formControlQuantidadeEmEstoqueLivro" placeholder="10...">
+              </div>
+              <div class="mb-3">
+                <label for="formControlPaginasLivro" class="form-label">Páginas:</label>
+                <input type="number" class="form-control" name="paginas" id="formControlPaginasLivro"
+                  placeholder="500...">
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+          </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button type="button" class="btn btn-primary">Salvar</button>
-        </div>
-      </div>
+      </form>
     </div>
   </div>
-  <div class="modal fade" id="modalPesquisarAutor" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+  <div class="modal fade" id="modalAdicionarAutor" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Pesquisar Autor</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      <form action="" method="post"> {% csrf_token %}
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Adicionar Autor</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="formControlNomeAutor">Nome do autor:</label>
+              <input class="form-control" type="text" name="nome" id="formControlNomeAutor" placeholder="Tim Maia">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+          </div>
         </div>
-        <div class="modal-body">
-          Hide this modal and show the first with the button below.
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-primary" data-bs-target="#modalAdicionarLivro" data-bs-toggle="modal">Confirmar</button>
-        </div>
-      </div>
+      </form>
     </div>
   </div>
+  <div class="modal fade" id="modalAdicionarGenero" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+      <form action="" method="post"> {% csrf_token %}
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Adicionar Gênero</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="formControlNomeGenero">Nome do Gênero:</label>
+              <input class="form-control" type="text" name="nome" id="formControlNomeGenero"
+                placeholder="Mistérios....">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
 </body>
+
 </html>

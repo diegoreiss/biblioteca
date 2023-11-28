@@ -1,18 +1,23 @@
-const buttonAdicionarLivro = document.querySelector("#buttonAdicionarLivro");
+const buttonAdicionarLivro = $("#buttonAdicionarLivro");
 
 const limparFormAdicionarLivro = () => {
   const camposForm = {
-    "nome": document.querySelector("#formControlNomeLivro"),
-    "autor": document.querySelector("#formControlAutorLivro"),
-    "quantidade_estoque": document.querySelector("#formControlQuantidadeEmEstoqueLivro"),
-    "paginas": document.querySelector("#formControlPaginasLivro")
+    "nome": $("#formControlNomeLivro"),
+    "autor": $("#formControlAutorLivro"),
+    "quantidade_estoque": $("#formControlQuantidadeEmEstoqueLivro"),
+    "paginas": $("#formControlPaginasLivro")
   }
 
   for (const [key, value] of Object.entries(camposForm)) {
-    value.value = "";
+    value.val("");
   }
 }
 
-buttonAdicionarLivro.addEventListener("click", (e) => {
+buttonAdicionarLivro.on("click", (e) => {
+  for (let elements of [$("#formControlAutorLivro"), $("#formControlGeneroLivro")]) {
+    elements.selectize({
+      sortField: "text",
+    });
+  }
   limparFormAdicionarLivro();
 });
