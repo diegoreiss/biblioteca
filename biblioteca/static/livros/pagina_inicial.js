@@ -23,15 +23,8 @@ buttonAdicionarLivro.on("click", (e) => {
 });
 
 const showToast = (color, title, body) => {
-  const myToast = $("#myToast");
-
-  if (myToast) {
-    myToast.remove();
-  }
-
-  $("body").append(`
-  <div id="myToast" class="toast-container position-fixed bottom-0 end-0 p-3">
-    <div id="liveToast" class="toast text-bg-${color}" role="alert" aria-live="assertive" aria-atomic="true">
+  $("#myToastContainer").append(`
+    <div class="myOwnToast toast text-bg-${color}" role="alert" aria-live="assertive" aria-atomic="true">
       <div class="toast-header">
         <strong class="me-auto">${title}</strong>
         <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
@@ -40,18 +33,25 @@ const showToast = (color, title, body) => {
       ${body}
       </div>
     </div>
-  </div>
   `);
 
-  const toastLiveExample = $("#liveToast");
-  const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
-  toastBootstrap.show();
+  $(".myOwnToast").toast("show");
 }
-
 
 const quantidadeAutores = Number($(`input[name="quantidadeAutores"]`).val());
 const quantidadeGeneros = Number($(`input[name="quantidadeGeneros"]`).val());
 
 if (!quantidadeAutores || !quantidadeGeneros) {
-  showToast("danger", "Adicionar Livro", "Sem autores e gêneros encontrados! <br> Não será possível adicionar um livro.");
+  showToast("danger", "Adicionar Livro", "Foi encontrado uma dependência de registros de autores e gêneros! <br> Não será possível adicionar um livro.");
+}
+
+const criarGeneroStatus = Number($("#criarGeneroStatus").html());
+
+switch (criarGeneroStatus) {
+  case 200:
+    showToast("success", "Adicionar Gênero", "Gênero adicionado com sucesso!"); break;
+  case 400:
+    showToast("danger", "Adicionar Gênero", "CONFLITO!<br>Campo vazio ou gênero já existente!"); break;
+  default:
+    break;
 }
