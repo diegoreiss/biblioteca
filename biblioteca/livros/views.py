@@ -76,12 +76,23 @@ def criar_livro(request):
     if request.POST:
         context = {'criar_livro_status': 0}
 
-        dados_livro = request.POST.copy()
+        if not all(request.POST.values()):
+            context['criar_livro_status'] = 400
+
+            return pagina_inicial(request, context)
+
+        dados_livro = {key: int(value) if str(value).isnumeric() else value for key, value in request.POST.items()}
         del dados_livro['csrfmiddlewaretoken']
 
-        for key, value in dados_livro.items():
-            if str(dados_livro[key]).isnumeric():
-                dados_livro[key] = int(dados_livro[key])
+        print(dados_livro)
+        
+        try:
+            Livro.objects.create(**dados_livro)
+            context['criar_livro_status'] = 200
+        except IntegrityError as e:
+            context['criar_livro_status'] = 400
+
+            return pagina_inicial(request, context)
         
         return pagina_inicial(request)
     

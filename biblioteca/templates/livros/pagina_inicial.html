@@ -1,7 +1,7 @@
 {% load static %}
 {% load filter %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
   <meta charset="UTF-8">
@@ -59,7 +59,7 @@
               </div>
               <div class="mb-3">
                 <label for="formControlAutorLivro">Autor do Livro:</label>
-                <select name="autor" id="formControlAutorLivro">
+                <select name="autor_id" id="formControlAutorLivro">
                   <option value="">Selecione um autor</option>
                   {% for autor in autores %}
                     <option value="{{ autor.id }}">{{ autor.nome }}</option>
@@ -68,7 +68,7 @@
               </div>
               <div class="mb-3">
                 <label for="formControlGeneroLivro">Gênero do Livro:</label>
-                <select name="genero" id="formControlGeneroLivro">
+                <select name="genero_id" id="formControlGeneroLivro">
                   <option value="">Selecione um gênero</option>
                   {% for genero in generos %}
                     <option value="{{ genero.id }}">{{ genero.nome }}</option>
@@ -84,6 +84,10 @@
                 <label for="formControlPaginasLivro" class="form-label">Páginas:</label>
                 <input type="number" class="form-control" name="paginas" id="formControlPaginasLivro"
                   placeholder="500...">
+              </div>
+              <div class="mb-3">
+                <label for="formControlImagemLivro" class="form-label">Imagem do Livro:</label>
+                <input class="form-control" name="imagem" type="file" accept="image/png, image/jpeg" id="formControlImagemLivro">
               </div>
           </div>
           <div class="modal-footer">
