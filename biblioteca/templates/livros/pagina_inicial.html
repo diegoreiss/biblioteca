@@ -45,7 +45,7 @@
   </main>
   <div class="modal fade" id="modalAdicionarLivro" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-      <form action="" method="post"> {% csrf_token %}
+      <form action="{% url 'criar-livro' %}" method="post"> {% csrf_token %}
         <div class="modal-content">
           <div class="modal-header">
             <h1 class="modal-title fs-5" id="exampleModalLabel">Adicionar Livro</h1>
@@ -61,17 +61,18 @@
                 <label for="formControlAutorLivro">Autor do Livro:</label>
                 <select name="autor" id="formControlAutorLivro">
                   <option value="">Selecione um autor</option>
-                  <option value="1">One</option>
-                  <option value="2">Two</option>
-                  <option value="1">Three</option>
+                  {% for autor in autores %}
+                    <option value="{{ autor.id }}">{{ autor.nome }}</option>
+                  {% endfor %}
                 </select>
               </div>
               <div class="mb-3">
                 <label for="formControlGeneroLivro">Gênero do Livro:</label>
                 <select name="genero" id="formControlGeneroLivro">
                   <option value="">Selecione um gênero</option>
-                  <option value="1">Ação</option>
-                  <option value="2">Mistério</option>
+                  {% for genero in generos %}
+                    <option value="{{ genero.id }}">{{ genero.nome }}</option>
+                  {% endfor %}
                 </select>
               </div>
               <div class="mb-3">
@@ -95,7 +96,8 @@
   </div>
   <div class="modal fade" id="modalAdicionarAutor" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-      <form action="" method="post"> {% csrf_token %}
+      <span id="criarAutorStatus" hidden>{{criar_autor_status}}</span>
+      <form action="{% url 'criar-autor' %}" method="post"> {% csrf_token %}
         <div class="modal-content">
           <div class="modal-header">
             <h1 class="modal-title fs-5" id="exampleModalLabel">Adicionar Autor</h1>

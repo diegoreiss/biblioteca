@@ -22,7 +22,7 @@ class Livro(models.Model):
     paginas = models.PositiveIntegerField(blank=False, null=False)
     quantidade_estoque = models.PositiveIntegerField(blank=False, null=False)
     imagem = models.ImageField(blank=True, null=True)
-    autores = models.OneToOneField(Autor, null=True, on_delete=models.SET_NULL)
+    autor = models.OneToOneField(Autor, null=True, on_delete=models.SET_NULL)
 
     def __str__(self) -> str:
         return f'{self.nome} - {self.quantidade_estoque}'

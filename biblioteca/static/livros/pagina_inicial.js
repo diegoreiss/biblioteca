@@ -46,12 +46,22 @@ if (!quantidadeAutores || !quantidadeGeneros) {
 }
 
 const criarGeneroStatus = Number($("#criarGeneroStatus").html());
+const criarAutorStatus = Number($("#criarAutorStatus").html());
 
 switch (criarGeneroStatus) {
   case 200:
     showToast("success", "Adicionar Gênero", "Gênero adicionado com sucesso!"); break;
   case 400:
     showToast("danger", "Adicionar Gênero", "CONFLITO!<br>Campo vazio ou gênero já existente!"); break;
+  default:
+    break;
+}
+
+switch (criarAutorStatus) {
+  case 200:
+    showToast("success", "Adicionar Autor", "Autor adicionado com sucesso!"); break;
+  case 400:
+    showToast("danger", "Adicionar Autor", "CONFLITO!<br>Campo vazio ou autor já existente!"); break;
   default:
     break;
 }
