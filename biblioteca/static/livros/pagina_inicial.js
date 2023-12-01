@@ -41,12 +41,14 @@ const showToast = (color, title, body) => {
 const quantidadeAutores = Number($(`input[name="quantidadeAutores"]`).val());
 const quantidadeGeneros = Number($(`input[name="quantidadeGeneros"]`).val());
 
+const criarGeneroStatus = Number($("#criarGeneroStatus").html());
+const criarAutorStatus = Number($("#criarAutorStatus").html());
+const criarLivroStatus = Number($("#criarLivroStatus").html());
+const criarAlunoStatus = Number($("#criarAlunoStatus").html());
+
 if (!quantidadeAutores || !quantidadeGeneros) {
   showToast("danger", "Adicionar Livro", "Foi encontrado uma dependência de registros de autores e gêneros! <br> Não será possível adicionar um livro.");
 }
-
-const criarGeneroStatus = Number($("#criarGeneroStatus").html());
-const criarAutorStatus = Number($("#criarAutorStatus").html());
 
 switch (criarGeneroStatus) {
   case 200:
@@ -62,6 +64,24 @@ switch (criarAutorStatus) {
     showToast("success", "Adicionar Autor", "Autor adicionado com sucesso!"); break;
   case 400:
     showToast("danger", "Adicionar Autor", "CONFLITO!<br>Campo vazio ou autor já existente!"); break;
+  default:
+    break;
+}
+
+switch (criarLivroStatus) {
+  case 200:
+    showToast("success", "Adicionar Livro", "Livro adicionado com sucesso!"); break;
+  case 400:
+    showToast("danger", "Adicionar Autor", "CONFLITO!<br>Campos vazios ou livro já existente!"); break;
+  default:
+    break;
+}
+
+switch (criarAlunoStatus) {
+  case 200:
+    showToast("success", "Adicionar Aluno", "Aluno adicionado com sucesso!"); break;
+  case 400:
+    showToast("danger", "Adicionar Aluno", "CONFLITO!<br>Campos vazios, nome de usuário existente ou email existente!"); break;
   default:
     break;
 }

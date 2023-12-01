@@ -45,7 +45,8 @@
   </main>
   <div class="modal fade" id="modalAdicionarLivro" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-      <form action="{% url 'criar-livro' %}" method="post"> {% csrf_token %}
+      <span id="criarLivroStatus" hidden>{{criar_livro_status}}</span>
+      <form action="{% url 'criar-livro' %}" method="post" enctype="multipart/form-data"> {% csrf_token %}
         <div class="modal-content">
           <div class="modal-header">
             <h1 class="modal-title fs-5" id="exampleModalLabel">Adicionar Livro</h1>

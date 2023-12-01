@@ -28,8 +28,45 @@
         </a>
         <ul class="dropdown-menu dropdown-menu-dark text-sm-center shadow">
             <li>
+                <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modalCriarAluno" href="">Criar Aluno</button>
+            </li>
+            <li>
                 <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
             </li>
         </ul>
     </div>
+    <div class="modal fade" id="modalCriarAluno" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <span id="criarAlunoStatus" hidden>{{ criar_aluno_status }}</span>
+          <form action="{% url 'criar-aluno' %}" method="post"> {% csrf_token %}
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title text-black fs-5" id="exampleModalLabel">Criar Aluno</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="formControlNomeAluno" class="form-label text-black">Nome do Aluno:</label>
+                        <input type="text" class="form-control" name="username" id="formControlNomeAluno"
+                        placeholder="Aluno">
+                    </div>
+                    <div class="mb-3">
+                        <label for="formControlEmailAluno" class="form-label text-black">Email do Aluno:</label>
+                        <input type="email" class="form-control" name="email" id="formControlEmailAluno"
+                        placeholder="exemplo@email.com">
+                    </div>
+                    <div class="mb-3">
+                        <label for="formControlSenhaAluno" class="form-label text-black">Senha provisória do Aluno:</label>
+                        <input type="password" class="form-control" name="password" id="formControlSenhaAluno"
+                        placeholder="Senha">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                  <button type="submit" class="btn btn-primary">Confirmar</button>
+                </div>
+              </div>
+          </form>
+        </div>
+      </div>
 </div>

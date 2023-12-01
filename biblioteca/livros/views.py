@@ -82,18 +82,18 @@ def criar_livro(request):
             return pagina_inicial(request, context)
 
         dados_livro = {key: int(value) if str(value).isnumeric() else value for key, value in request.POST.items()}
+        dados_livro['imagem'] = request.FILES.get('imagem')
         del dados_livro['csrfmiddlewaretoken']
-
-        print(dados_livro)
         
         try:
             Livro.objects.create(**dados_livro)
+
             context['criar_livro_status'] = 200
         except IntegrityError as e:
             context['criar_livro_status'] = 400
 
             return pagina_inicial(request, context)
         
-        return pagina_inicial(request)
+        return pagina_inicial(request, context)
     
     return pagina_inicial(request)

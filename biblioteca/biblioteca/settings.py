@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'livros',
-    'templatetags.filter'
+    'templatetags.filter',
+    'accounts'
 ]
 
 MIDDLEWARE = [
@@ -135,3 +136,5 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = '/'
+
+AUTH_USER_MODEL = 'accounts.CustomUser'
