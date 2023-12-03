@@ -96,7 +96,6 @@ def criar_aluno(request):
         dados_aluno = {key: value for key, value in request.POST.copy().items()}
         dados_aluno['role'] = CustomUser.ALUNO
         del dados_aluno['csrfmiddlewaretoken']
-        print(dados_aluno)
 
         try:
             user = CustomUser(**dados_aluno)

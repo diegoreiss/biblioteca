@@ -6,7 +6,7 @@ def password_changed_required(function):
         if not request.user.is_password_changed:
             return redirect('retype-password')
         
-        return function(request)
+        return function(request, *args, **kwargs)
         
     return wrapper
     
