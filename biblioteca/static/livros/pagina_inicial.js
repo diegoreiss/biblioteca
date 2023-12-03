@@ -1,11 +1,21 @@
-const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
-const tooltipList = [...tooltipTriggerList].map(tooltipTriggerListEl => new bootstrap.Tooltip(tooltipTriggerListEl));
-
 const buttonAdicionarLivro = $("#buttonAdicionarLivro");
+const buttonCriarAluno = $("#buttonCriarAluno");
+
+
+const limparFormAdicionarAluno = () => {
+  const camposForm = {
+    "nome": $("#formControlNomeAluno"),
+    "email": $("#formControlEmailAluno"),
+    "senha": $("#formControlSenhaAluno")
+  }
+
+  for (const [key, value] of Object.entries(camposForm)) {
+    value.val("");
+  }
+}
+
 
 const limparFormAdicionarLivro = () => {
-  console.log("cu");
-
   const camposForm = {
     "nome": $("#formControlNomeLivro"),
     "quantidade_estoque": $("#formControlQuantidadeEmEstoqueLivro"),
@@ -23,6 +33,10 @@ const limparFormAdicionarLivro = () => {
   $("#formControlImagemLivro").replaceWith(newInputFileLivro);
 }
 
+buttonCriarAluno.on("click", (e) => {
+  limparFormAdicionarAluno();
+});
+
 buttonAdicionarLivro.on("click", (e) => {
   for (let elements of [$("#formControlAutorLivro"), $("#formControlGeneroLivro")]) {
     elements.selectize({
@@ -30,6 +44,14 @@ buttonAdicionarLivro.on("click", (e) => {
     });
   }
   limparFormAdicionarLivro();
+});
+
+$("#buttonAdicionarAutor").on("click", (e) => {
+  $("#formControlNomeAutor").val("");
+});
+
+$("#buttonAdicionarGenero").on("click", (e) => {
+  $("#formControlNomeGenero").val("");
 });
 
 const showToast = (color, title, body) => {
