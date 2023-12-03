@@ -4,16 +4,23 @@ const tooltipList = [...tooltipTriggerList].map(tooltipTriggerListEl => new boot
 const buttonAdicionarLivro = $("#buttonAdicionarLivro");
 
 const limparFormAdicionarLivro = () => {
+  console.log("cu");
+
   const camposForm = {
     "nome": $("#formControlNomeLivro"),
-    "autor": $("#formControlAutorLivro"),
     "quantidade_estoque": $("#formControlQuantidadeEmEstoqueLivro"),
-    "paginas": $("#formControlPaginasLivro")
+    "paginas": $("#formControlPaginasLivro"),
   }
 
   for (const [key, value] of Object.entries(camposForm)) {
     value.val("");
   }
+
+  $('#formControlAutorLivro')[0].selectize.clear();
+  $('#formControlGeneroLivro')[0].selectize.clear();
+
+  let newInputFileLivro = `<input class="form-control" name="imagem" type="file" accept="image/png, image/jpeg" id="formControlImagemLivro">`
+  $("#formControlImagemLivro").replaceWith(newInputFileLivro);
 }
 
 buttonAdicionarLivro.on("click", (e) => {
