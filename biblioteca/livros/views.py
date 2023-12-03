@@ -19,8 +19,13 @@ context_autores_generos = {
 @password_changed_required
 def pagina_inicial(request, newContext={}):
     numero_pagina = int(request.GET.get('page')) if request.GET.get('page') else 1
+    livro_like = request.GET.get('livroLike')
 
-    paginator = Paginator(Livro.objects.all(), ITEMS_POR_PAGINA)
+    paginator = Paginator(Livro.objects.filter(quantidade_estoque__gt=0).all(), ITEMS_POR_PAGINA)
+
+    if livro_like:
+        paginator = Paginator(Livro.objects.filter(quantidade_estoque__gt=0, nome__contains=livro_like).all(), ITEMS_POR_PAGINA)
+
     paginator_el = list(paginator.get_elided_page_range(numero_pagina, on_each_side=3, on_ends=1))
     pagina = paginator.get_page(numero_pagina)
 

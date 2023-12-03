@@ -15,27 +15,33 @@
     <div class="section-content w-100">
       <div class="section-content-header py-1 px-3 d-flex justify-content-between align-items-center border-bottom">
         <h1 class="p-3">Livros:</h1>
-        {% if user.role == 2 %}
-          <div class="btn-group p-4">
-            <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown"
-              aria-expanded="false">Ações</button>
-            <ul class="dropdown-menu">
-              <input type="hidden" name="quantidadeAutores" value="{{autores|length}}">
-              <input type="hidden" name="quantidadeGeneros" value="{{generos|length}}">
-              {% if autores|length == 0 or generos|length == 0 %}
-                <li><button id="buttonAdicionarLivro" type="button" class="dropdown-item disabled" data-bs-toggle="modal"
-                    data-bs-target="#modalAdicionarLivro">Adicionar Livro</button></li>
-              {% else %}
-                <li><button id="buttonAdicionarLivro" type="button" class="dropdown-item" data-bs-toggle="modal"
-                    data-bs-target="#modalAdicionarLivro">Adicionar Livro</button></li>
-              {% endif %}
-              <li><button id="buttonAdicionarAutor" type="button" class="dropdown-item" data-bs-toggle="modal"
-                  data-bs-target="#modalAdicionarAutor">Adicionar Autor</button></li>
-              <li><button id="buttonAdicionarGenero" type="button" class="dropdown-item" data-bs-toggle="modal"
-                  data-bs-target="#modalAdicionarGenero">Adicionar Gênero</button></li>
-            </ul>
-          </div>
-        {% endif %}
+        <div class="d-flex">
+          <form action="{% url 'pagina-inicial' %}" method="get" class="d-flex p-4" role="search">
+            <input name="livroLike" class="form-control me-2" type="search" placeholder="Nome do livro:" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Pesquisar</button>
+          </form>
+          {% if user.role == 2 %}
+            <div class="btn-group p-4">
+              <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown"
+                aria-expanded="false">Ações</button>
+              <ul class="dropdown-menu">
+                <input type="hidden" name="quantidadeAutores" value="{{autores|length}}">
+                <input type="hidden" name="quantidadeGeneros" value="{{generos|length}}">
+                {% if autores|length == 0 or generos|length == 0 %}
+                  <li><button id="buttonAdicionarLivro" type="button" class="dropdown-item disabled" data-bs-toggle="modal"
+                      data-bs-target="#modalAdicionarLivro">Adicionar Livro</button></li>
+                {% else %}
+                  <li><button id="buttonAdicionarLivro" type="button" class="dropdown-item" data-bs-toggle="modal"
+                      data-bs-target="#modalAdicionarLivro">Adicionar Livro</button></li>
+                {% endif %}
+                <li><button id="buttonAdicionarAutor" type="button" class="dropdown-item" data-bs-toggle="modal"
+                    data-bs-target="#modalAdicionarAutor">Adicionar Autor</button></li>
+                <li><button id="buttonAdicionarGenero" type="button" class="dropdown-item" data-bs-toggle="modal"
+                    data-bs-target="#modalAdicionarGenero">Adicionar Gênero</button></li>
+              </ul>
+            </div>
+          {% endif %}
+        </div>
       </div>
       <div class="livros-container d-flex justify-content-around align-items-center flex-wrap gap-4 p-5">
         {% for livro in dados_pagina %}
