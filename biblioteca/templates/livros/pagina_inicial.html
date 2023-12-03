@@ -40,7 +40,7 @@
       <div class="livros-container d-flex justify-content-around align-items-center flex-wrap gap-4 p-5">
         {% for livro in dados_pagina %}
           <div class="card" style="width: 18rem;">
-            <img src="{{ livro.imagem.url }}" class="card-img-top" alt="image">
+            <img src="{{ livro.imagem.url }}" class="card-img-top img-fluid" alt="image">
             <div class="card-body">
               <h5 class="card-title">{{ livro.nome }}</h5>
               <span class="badge text-bg-info mb-2">{{ livro.genero.nome }}</span>

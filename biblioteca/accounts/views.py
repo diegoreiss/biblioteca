@@ -2,7 +2,6 @@ from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from django.contrib import auth, messages
 from django.db.utils import IntegrityError
-from django.http import HttpResponseRedirect
 
 from .models import CustomUser
 from .decorators import password_changed_required
@@ -82,12 +81,14 @@ def retype_password(request):
         except BaseException as e:
             raise e
 
-        return HttpResponseRedirect(request.path_info)
+        messages.success(request, 'Senha alterada com sucesso!')
+        return redirect('login')
 
     return render(request, 'registration/retype_password.html')
 
 
 @login_required
+@password_changed_required
 def criar_aluno(request):
     if request.POST:
         context = {'criar_aluno_status': 0}

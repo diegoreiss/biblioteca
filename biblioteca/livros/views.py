@@ -1,5 +1,4 @@
-from django.shortcuts import render, redirect
-from django.contrib import messages
+from django.shortcuts import render
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.db.utils import IntegrityError
@@ -54,6 +53,7 @@ def emprestimos(request):
 
 
 @login_required
+@password_changed_required
 def criar_genero(request):
     if request.POST:
         context = {'criar_genero_status': 0}
@@ -77,6 +77,7 @@ def criar_genero(request):
 
 
 @login_required
+@password_changed_required
 def criar_autor(request):
     if request.POST:
         context = {'criar_autor_status': 0}
@@ -100,6 +101,8 @@ def criar_autor(request):
     return pagina_inicial(request)
 
 
+@login_required
+@password_changed_required
 def criar_livro(request):
     if request.POST:
         context = {'criar_livro_status': 0}

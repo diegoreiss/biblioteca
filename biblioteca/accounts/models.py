@@ -39,6 +39,9 @@ class CustomUser(AbstractUser):
         self.prev_password = None
         super(CustomUser, self).save(*args, **kwargs)
 
+        if retype_password: return
+        if kwargs.get('update_fields'): return
+
         if not self.is_superuser:
             content = "Muito obrigado por usar o nosso sistema!\n" + \
             "A seguir os seus dados de autenticação provisórios:\n\n" + \
