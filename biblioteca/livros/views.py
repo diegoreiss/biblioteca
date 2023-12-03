@@ -1,10 +1,14 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.db.utils import IntegrityError
 
 from .models import Autor, Genero, Livro
+from accounts.decorators import password_changed_required
 
+
+ITEMS_POR_PAGINA = 10
 
 context_autores_generos = {
     "autores": Autor.objects.all,
@@ -13,14 +17,38 @@ context_autores_generos = {
 
 
 @login_required
+@password_changed_required
 def pagina_inicial(request, newContext={}):
+    numero_pagina = int(request.GET.get('page')) if request.GET.get('page') else 1
+
+    paginator = Paginator(Livro.objects.all(), ITEMS_POR_PAGINA)
+    paginator_el = list(paginator.get_elided_page_range(numero_pagina, on_each_side=3, on_ends=1))
+    pagina = paginator.get_page(numero_pagina)
+
     context = {key: value() for key, value in context_autores_generos.items()}
     context.update(newContext)
+    context.update({
+        'pagina_atual': numero_pagina,
+        'total_paginas': paginator.num_pages,
+        'pagina_array': paginator_el,
+        'dados_pagina': pagina
+    })   
 
     return render(request, 'livros/pagina_inicial.html', context=context)
 
 
 @login_required
+@password_changed_required
+def detalhes_livro(request, id):
+    context = {
+        'livro': Livro.objects.get(id=id)
+    }
+
+    return render(request, 'livros/detalhe_livro.html', context=context)
+
+
+@login_required
+@password_changed_required
 def emprestimos(request):
     return render(request, 'livros/emprestimos.html')
 

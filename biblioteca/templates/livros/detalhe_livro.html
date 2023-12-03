@@ -1,0 +1,43 @@
+{% load static %}
+{% load filter %}
+<!DOCTYPE html>
+<html lang="en">
+{% with head_title='Detalhes do Livro' %}
+  {% include 'includes/livros/head.html' %}
+{% endwith %}
+
+<body>
+  {% include 'includes/navbar.html' %}
+  <main class="d-flex flex-nowrap">
+    {% with tela='livros' %}
+      {% include 'includes/sidebar.html' %}
+    {% endwith %}
+    <div class="section-content w-100">
+      <div class="section-content-header py-1 px-3 d-flex justify-content-between align-items-center border-bottom">
+        <h2 class="p-3">Detalhes do Livro</h2>
+      </div>
+      <div class="detalhes-livro-container p-5">
+        <div class="card mb-3" style="max-width: 540px;">
+          <div class="row g-0">
+            <div class="col-md-4">
+              <img src="{{ livro.imagem.url }}" class="img-fluid rounded-start" alt="...">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title">Título: <strong>{{ livro.nome }}</strong></h5>
+                <p class="card-text">Autor: <strong>{{ livro.autor.nome }}</strong></p>
+                <p class="card-text">Gênero: <strong>{{ livro.genero.nome }}</strong></p>
+                <p class="card-text">Páginas: <strong>{{ livro.paginas }}</strong></p>
+                {% if user.role == 2 %}
+                  <p class="card-text">Quantidade em estoque: <strong>{{ livro.quantidade_estoque }}</strong></p>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+
+</html>

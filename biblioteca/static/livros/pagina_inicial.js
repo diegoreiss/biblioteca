@@ -1,3 +1,6 @@
+const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+const tooltipList = [...tooltipTriggerList].map(tooltipTriggerListEl => new bootstrap.Tooltip(tooltipTriggerListEl));
+
 const buttonAdicionarLivro = $("#buttonAdicionarLivro");
 
 const limparFormAdicionarLivro = () => {

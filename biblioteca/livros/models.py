@@ -1,8 +1,12 @@
 from django.db import models
+from django.db.models import F
 
 # Create your models here.
 
 class Genero(models.Model):
+    class Meta:
+        ordering = [F('id').asc()]
+
     nome = models.CharField(max_length=255, unique=True, blank=False, null=False)
 
     def __str__(self) -> str:
@@ -10,6 +14,9 @@ class Genero(models.Model):
 
 
 class Autor(models.Model):
+    class Meta:
+        ordering = [F('id').asc()]
+        
     nome = models.CharField(max_length=255, unique=True, blank=False)
 
     def __str__(self) -> str:
@@ -17,6 +24,9 @@ class Autor(models.Model):
 
 
 class Livro(models.Model):
+    class Meta:
+        ordering = [F('id').asc()]
+
     nome = models.CharField(max_length=255, unique=True, blank=False, null=False)
     genero = models.ForeignKey(Genero, on_delete=models.SET)
     paginas = models.PositiveIntegerField(blank=False, null=False)

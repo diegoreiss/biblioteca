@@ -27,9 +27,11 @@
             <strong>{{user}}</strong>
         </a>
         <ul class="dropdown-menu dropdown-menu-dark text-sm-center shadow">
-            <li>
-                <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modalCriarAluno" href="">Criar Aluno</button>
-            </li>
+            {% if user.role == 2 %}
+                <li>
+                    <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modalCriarAluno" href="">Criar Aluno</button>
+                </li>
+            {% endif %}
             <li>
                 <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
             </li>
