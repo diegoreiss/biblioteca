@@ -1,4 +1,5 @@
 from typing import Any
+from django.shortcuts import HttpResponseRedirect
 from django.contrib import admin, messages
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import gettext_lazy as _
@@ -50,14 +51,8 @@ class CustomAdmin(UserAdmin):
     )
 
     def save_model(self, request: Any, obj: Any, form: Any, change: Any) -> None:
-        print(request.method)
-
         dados_form = {key: value for key, value in request.POST.copy().items()}
         del dados_form['csrfmiddlewaretoken']
-
-        if not dados_form.get('is_superuser'):
-            print('vou mandar email')
-            messages.add_message(request, messages.INFO, 'enviei pro email meu parcero')       
 
         return super().save_model(request, obj, form, change)
     
