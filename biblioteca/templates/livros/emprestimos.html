@@ -1,19 +1,79 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% include 'includes/links.html' %}
-    <link rel="stylesheet" href="{% static 'sidebar.css' %}">
-    <title>Empréstimos</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% include 'includes/links.html' %}
+  <link rel="stylesheet" href="{% static 'sidebar.css' %}">
+  <link rel="stylesheet" href="{% static 'livros/pagina_inicial.css' %}">
+  <title>Empréstimos</title>
 </head>
+
 <body>
-    {% include 'includes/navbar.html' %}
-    <main class="d-flex flex-nowrap">
-        {% with tela="emprestimos" %}
-            {% include 'includes/sidebar.html' %}
-        {% endwith %}
-    </main>
+  {% include 'includes/navbar.html' %}
+  <main class="d-flex flex-nowrap">
+    {% with tela="emprestimos" %}
+      {% include 'includes/sidebar.html' %}
+    {% endwith %}
+
+    <div class="section-content w-100">
+      <div class="section-content-header py-1 px-3 d-flex justify-content-between align-items-center border-bottom">
+        {% if user.role == 1 %}
+          <h1 class="p-3">Meus Livros:</h1>
+        {% elif user.role == 2 %}
+          <h1 class="p-3">Empréstimos</h1>
+        {% endif %}
+        <div class="d-flex">
+          <form action="" method="get" class="d-flex p-4" role="search">
+            <input name="emprestimoLivroLike" class="form-control me-2" type="search" placeholder="Nome do livro:" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Pesquisar</button>
+          </form>
+        </div>
+      </div>
+      <div class="livros-container d-flex justify-content-around align-items-center flex-wrap gap-4 p-5">
+        {% for emprestimo in emprestimos %}
+          <div class="card" style="width: 18rem;">
+            <img src="{{ emprestimo.livro.imagem.url }}" class="card-img-top img-fluid" alt="image">
+            <div class="card-body">
+              <h5 class="card-title">{{ emprestimo.livro.nome }}</h5>
+              <span class="badge text-bg-info mb-2">{{ emprestimo.livro.genero.nome }}</span>
+              <p class="card-text">{{ emprestimo.livro.autor.nome }}</p>
+              <a href="{% url 'detalhes-livro' emprestimo.livro.id %}" class="btn btn-primary">Mais detalhes</a>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      <div class="livros-pagination-container pt-3 border-top">
+        <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-center">
+            {% if pagina_atual == 1 %}
+              <li class="page-item disabled"><span class="page-link">Anterior</span></li>
+            {% else %}
+              {% with pagina_anterior=pagina_atual|add:'-1' %}
+                <li class="page-item"><a class="page-link" href="{% url 'emprestimos' %}?page={{ pagina_anterior }}">Anterior</a></li>
+              {% endwith %}
+            {% endif %}
+            {% for pagina_item in pagina_array %}
+              {% if pagina_item == pagina_atual %}
+                <li class="page-item active"><span class="page-link">{{ pagina_item }}</span></li>
+              {% else %}
+                <li class="page-item"><a class="page-link" href="{% url 'emprestimos' %}?page={{ pagina_item }}">{{ pagina_item }}</a></li>
+              {% endif %}
+            {% endfor %}
+            {% if pagina_atual == total_paginas %}
+              <li class="page-item disabled"><span class="page-link">Próximo</span></li>
+            {% else %}
+              {% with pagina_posterior=pagina_atual|add:'1' %}
+                <li class="page-item"><a class="page-link" href="{% url 'emprestimos' %}?page={{ pagina_posterior }}">Próximo</a></li>
+              {% endwith %}
+            {% endif %}
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </main>
 </body>
+
 </html>

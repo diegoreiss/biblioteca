@@ -48,13 +48,15 @@
           <div class="card" style="width: 18rem;">
             <img src="{{ livro.imagem.url }}" class="card-img-top img-fluid" alt="image">
             <div class="card-body">
+              {% if livros_relacionados %}
+                {% if livro.id in livros_relacionados %}
+                  <span class="badge mb-2 text-bg-success">Possui</span>
+                {% endif %}
+              {% endif %}
               <h5 class="card-title">{{ livro.nome }}</h5>
               <span class="badge text-bg-info mb-2">{{ livro.genero.nome }}</span>
               <p class="card-text">{{ livro.autor.nome }}</p>
               <a href="{% url 'detalhes-livro' livro.id %}" class="btn btn-primary">Mais detalhes</a>
-              {% if user.role == 1 %}
-                <a href="#" class="btn btn-secondary">Solicitar Empréstimo</a>
-              {% endif %}
             </div>
           </div>
         {% endfor %}
@@ -194,6 +196,8 @@
       </div>
     </div>
   {% endif %}
+  <span id="criarEmprestimoStatus" hidden>{{ criar_emprestimo_status }}</span>
+  <span id="devolverLivroEmprestadoStatus" hidden>{{ devolver_livro_emprestado_status }}</span>
   <div id="myToastContainer" class="toast-container position-fixed bottom-0 end-0 p-3"></div>
 </body>
 

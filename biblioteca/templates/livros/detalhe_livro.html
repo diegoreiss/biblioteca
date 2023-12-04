@@ -24,6 +24,9 @@
             </div>
             <div class="col-md-8">
               <div class="card-body">
+                {% if aluno_tem %}
+                  <span class="badge mb-2 text-bg-info">Você possui esse livro emprestado</span>
+                {% endif %}
                 <h5 class="card-title">Título: <strong>{{ livro.nome }}</strong></h5>
                 <p class="card-text">Autor: <strong>{{ livro.autor.nome }}</strong></p>
                 <p class="card-text">Gênero: <strong>{{ livro.genero.nome }}</strong></p>
@@ -35,6 +38,22 @@
             </div>
           </div>
         </div>
+        {% if user.role == 1 %}
+          {% if aluno_tem %}
+            <div class="d-flex gap-2">
+              <button class="btn btn-outline-primary" disabled>Pegar Emprestado</button>
+              <form action="{% url 'devolver-livro-emprestado' livro.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-outline-secondary">Devolver</button>
+              </form>
+            </div>
+          {% else %}
+            <form action="{% url 'pegar-emprestado' livro.id %}" method="post">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-outline-primary">Pegar Emprestado</button>
+            </form>
+          {% endif %}
+        {% endif %}
       </div>
     </div>
   </main>
